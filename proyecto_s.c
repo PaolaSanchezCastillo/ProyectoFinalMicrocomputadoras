@@ -15,34 +15,73 @@
 void potenciometro()
 {
   float voltajeP;
-  unsigned int8 puertob;
+
   set_adc_channel(0);
   delay_us(50);
   voltajeP = 0.0048875 * 2 * read_adc();
-  if (voltajeP < 102.4)
-    {puertob=0x0;}
-  else if (voltajeP < 204.8)
-    {puertob=0x1;}
-  else if (voltajeP < 307.2)
-    {puertob=0x2;}
-  else if (voltajeP < 409.6)
-    {puertob=0x3;}
-  else if (voltajeP < 512)
-    {puertob=0x4;}
-  else if (voltajeP < 614.4)
-    {puertob=0x5;}
-  else if (voltajeP < 716.8)
-    {puertob=0x6;}
-  else if (voltajeP < 819.2)
-    {puertob=0x7;}
-  else if (voltajeP < 921.6)
-    {puertob=0x8;}
-  else if (voltajeP < 1024)
-    {puertob=0x9;}
-  lcd_gotoxy(1,1);
-  output_b(puertob);
-  printf(lcd_putc,"Voltaje: \n V= %2.1f[V]",voltajeP);
+  if (voltajeP > 4.44)
+    {output_b(0x00);}
+  else if (voltajeP > 3.88)
+    {output_b(0x01);}
+  else if (voltajeP > 3.33)
+    {output_b(0x02);}
+  else if (voltajeP > 2.77)
+    {output_b(0x03);}
+  else if (voltajeP > 2.22)
+    {output_b(0x05);}
+  else if (voltajeP > 1.66)
+    {output_b(0x06);}
+  else if (voltajeP > 1.11)
+    {output_b(0x07);}
+  else if (voltajeP > 0.55)
+    {output_b(0x08);}
+  else if (voltajeP > 0)
+    {output_b(0x09);}
+    
   delay_ms(500);
+}
+
+void motor()
+{ 
+  char pal;
+  int prueba;
+  pal="a";
+  //printf(lcd_putc,"Aqui estoy\n");
+  if (pal=="e")
+  {
+   prueba=1;
+  }
+  else if (pal=="a")
+  {
+   prueba=0;
+  }
+  else
+  {
+   prueba=2;
+  }
+ 
+  switch(prueba)
+  {
+    case 1:
+      output_c(0x01);
+      lcd_gotoxy(1,1);
+      printf(lcd_putc,"Enciende motor\n");
+      delay_ms(500);
+      break;
+    case 0:
+      output_c(0x00);
+      lcd_gotoxy(1,1);
+      printf(lcd_putc,"Apaga motor");
+      delay_ms(500);
+      break;
+    case 2:
+      output_c(0x01);
+      lcd_gotoxy(1,1);
+      printf(lcd_putc,"no compara ca- \ndena o caracter");
+      delay_ms(500);
+      break;
+  }
+
 }
 
 void main()
@@ -56,5 +95,6 @@ void main()
   while(1)
   {
     potenciometro();
+    motor();
   }
 }
