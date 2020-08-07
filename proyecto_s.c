@@ -19,7 +19,7 @@ static int16 contador=0;
 void clock_isr( )
 {
 contador++;
-  if(contador >= 154)
+  if(contador >= 60)
   {
     float voltajeP;
     //delay_us(50);
@@ -50,37 +50,6 @@ contador++;
   }
 }
 
-/*
-void potenciometro()
-{
-  float voltajeP;
-
-  set_adc_channel(0);
-  delay_us(50);
-  voltajeP = 0.0048875  * read_adc();
-  if (voltajeP > 4.5)
-    {output_b(0x00);printf("0");}     
-  else if (voltajeP > 4)
-    {output_b(0x01);printf("1");}     
-  else if (voltajeP > 3.5)
-    {output_b(0x02);printf("2");}     
-  else if (voltajeP > 3)
-    {output_b(0x03);printf("3");}      
-  else if (voltajeP > 2.5)
-    {output_b(0x04);printf("4");}      
-  else if (voltajeP > 2)
-    {output_b(0x05);printf("5");}     
-  else if (voltajeP > 1.5)
-    {output_b(0x06);printf("6");}     
-  else if (voltajeP > 1)
-    {output_b(0x07);printf("7");}     
-  else if (voltajeP > 0.5)
-    {output_b(0x08);printf("8");}     
-  else if (voltajeP > 0)
-    {output_b(0x09);printf("9");}      
-  delay_ms(500);
-}
-*/
 int compara_p()
 {
   int comp;
@@ -168,10 +137,17 @@ void main()
   enable_interrupts(GLOBAL); //Habilita interrupciones generales
   lcd_init();
 
+  
+  lcd_gotoxy(1,1);
+  printf(lcd_putc,"Paola Elizabeth\nSchz. Castillo");
+  delay_ms(3000);
+  lcd_putc("\f");
+
+
   while(1)
   {
-    //potenciometro();
     motor();
   }
 }
+
 
